@@ -1,11 +1,43 @@
-const router = require('express').Router();
+const router = require('express').Router(),
+    Writer = require('../../db/models/writerModel');
 
-// JUST FOR DEMO PURPOSES, PUT YOUR ACTUAL API CODE HERE
-router.get('/api/demo', (request, response) => {
-  response.json({
-    message: 'Hello from server.js'
-  });
+// Create a new writer
+router.post('/new', async (req, res) => {
+    const { name, email, password } = req.body;
+    try {
+        const newWriter = new Writer({
+            name,
+            email,
+            password
+        });
+
+        const token = await Writer.generateAuthToken();
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            sameSite: 'Strict',
+            secure: process.env.NODE_ENV !== 'production' ? false : true
+        });
+        res.status(201).json(newWriter);
+    } catch (e) {
+        res.status(400).json({ error: e.toString() });
+    }
 });
-// END DEMO
+
+// Login a writer
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const writer = await Writer.findByCredentials(email, password);
+        const token = await writer.generateAuthToken();
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            sameSite: 'Strict',
+            secure: process.env.NODE_ENV !== 'production' ? false : true
+        });
+        res.json(writer);
+    } catch (e) {
+        res.status(400).json({ error: e.toString() });
+    }
+});
 
 module.exports = router;
