@@ -7,10 +7,10 @@
     <img src="https://res.cloudinary.com/jeanniet89/image/upload/c_limit,e_art:frost,h_288,q_91,r_19/v1600025028/favicon_zmmxhs.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Cuenta APP</h3>
+  <h3 align="center">Jeannie's Blog</h3>
 
   <p align="center">
-    An awesome BillSplitting APP!
+    A MERN blog!
   </p>
 </p>
 
@@ -19,7 +19,6 @@
 
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
-- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Contributing](#contributing)
@@ -28,23 +27,12 @@
 <!-- ABOUT THE PROJECT -->
 # Jeanniesblog
 
-[Cuenta](https://cuenta-final-app.herokuapp.com/)
-
-In the World we live in, `TIME` is of the essence. With that being said, we realized that there was a huge need for an APP to help make splitting a bill as easy as saying `SHOTS PLEASE.`
+Mern Blog project created with the `MERN` stack to continue to test my skills.
 
 ## Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 - [Bootstrap](https://getbootstrap.com)
-- [JQuery](https://jquery.com)
 - [React](https://react.com)
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ## Prerequisites
 
@@ -108,7 +96,7 @@ Any contributions you make are **greatly appreciated**.
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-Project Link: [https://github.com/wyncode/C38_bill_splitting](https://github.com/wyncode/C38_bill_splitting)
+Project Link: [https://github.com/Jeanniet89/jeanniesBlog](https://github.com/Jeanniet89/jeanniesBlog)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
@@ -129,5 +117,3 @@ Project Link: [https://github.com/wyncode/C38_bill_splitting](https://github.com
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jeannie-torres-6628bb96/
-[issues-shield]: https://img.shields.io/github/issues/wyncode/C38_bill_splitting.svg?style=flat-square
-[issues-url]: https://github.com/wyncode/C38_bill_splitting/issues
