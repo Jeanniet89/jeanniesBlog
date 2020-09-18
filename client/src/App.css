@@ -1,4 +1,76 @@
 .fullscreen {
 	height: 100vh;
 }
+:root {
+	--light-green: rgb(60, 243, 243);
+	--dark: rgb(65, 73, 73);
+}
 
+* {
+	font-family: 'jura', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: white;
+}
+
+.jumbotron {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: url('https://res.cloudinary.com/jeanniet89/image/upload/c_limit,h_307,q_auto,r_0/v1600325333/dreamofjeannie_o3tks0.jpg');
+	background-size: cover;
+	height: 550px;
+	text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+.bloglist-container {
+  padding: 20px;
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  padding-top: 1.5%;
+  padding-bottom: 5%;
+}
+
+.title {
+  display: block;
+  padding-bottom: 3%;
+  border-bottom: 1px solid gray;
+  opacity: 0.35;
+}
+
+.bloglist-btn {
+  margin-top: 20px;
+  background-color: black;
+  border-color: black;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase !important;
+  transition: 0.5s;
+  letter-spacing: 1px;
+  overflow: hidden;
+  font-weight: bold;
+}
+.bloglist-btn:hover {
+  background-color: #ee6c60 !important;
+  color: #050801 !important;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005) !important;
+}

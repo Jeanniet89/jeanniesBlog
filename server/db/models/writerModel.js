@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    validator = require('validator');
+    validator = require('validator'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken');
 
@@ -28,7 +28,7 @@ const writerSchema = new mongoose.Schema(
                 trim: true,
                 validate(value) {
                     if (value.toLowerCase().includes('password')) {
-                        throw new Error("Password can't be password.");
+                        throw new Error("Can't be password.");
                     }
                     if (value.length < 6) {
                         throw new Error('Password must be at least 6 characters long.');
@@ -77,7 +77,7 @@ writerSchema.methods.generateAuthToken = async function () {
 // to find a writer by email and password
 writerSchema.statics.findByCredentials = async (email, password) => {
     const writer = await writer.findOne({ email });
-    if (!writer) throw new Error('Unable to log in.');
+    if (!writer) throw new Error('Not a user.');
     const isMatch = await bcrypt.compare(password, writer.password);
     if (!isMatch) throw new Error('Unable to login.');
     return writer;
@@ -94,4 +94,4 @@ writerSchema.pre('save', async function (next) {
 
 const Writer = mongoose.model("Writer", writerSchema);
 
-module.export = Writer;
+module.exports = Writer;

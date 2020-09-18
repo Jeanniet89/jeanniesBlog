@@ -1,22 +1,34 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
-export const AppContextProvider = ({ children }) => {
-  const [contextMessage, setContextMessage] = useState('');
+const AppContextProvider = ({ children }) => {
+  const [Writer, setWriter] = useState(null);
+  const [loading, setLoading] = useState(false);
+    const writer = sessionStorage.getItem('writer');
 
-  const contextMethod = () => {
-    setContextMessage('Hello from client/src/context/AppContext.jsx');
-  };
+  useEffect(() => {
+    if (writer && !Writer) {
+      axios
+        .get('/writers/me', { withCredentials: true })
+        .then((res) => setWriter(res.data))
+        .catch((error) => console.log(error));
+    }
+  }, [Writer, writer]);
 
   return (
     <AppContext.Provider
       value={{
-        contextMessage,
-        contextMethod
+        Writer,
+        setWriter,
+        loading,
+        setLoading,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
+
+export { AppContext, AppContextProvider };

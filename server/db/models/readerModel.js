@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const readerSchema = new Schema({
     name: {
         type: String,
@@ -19,4 +18,4 @@ const readerSchema = new Schema({
 
 const Reader = mongoose.model("Reader", readerSchema);
 
-module.export = Reader;
+module.exports = Reader;

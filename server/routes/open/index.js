@@ -2,29 +2,28 @@ const router = require('express').Router(),
     Writer = require('../../db/models/writerModel');
 
 // Create a new writer
-router.post('/new', async (req, res) => {
+router.post('/writers/new', async (req, res) => {
     const { name, email, password } = req.body;
     try {
-        const newWriter = new Writer({
+        const writer = new Writer({
             name,
             email,
             password
         });
-
-        const token = await Writer.generateAuthToken();
+        const token = await writer.generateAuthToken();
         res.cookie('jwt', token, {
             httpOnly: true,
             sameSite: 'Strict',
             secure: process.env.NODE_ENV !== 'production' ? false : true
         });
-        res.status(201).json(newWriter);
-    } catch (e) {
-        res.status(400).json({ error: e.toString() });
+        res.status(201).json(writer);
+    } catch (error) {
+        res.status(401).json({ error: error.toString() });
     }
 });
 
 // Login a writer
-router.post('/login', async (req, res) => {
+router.post('/writers/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const writer = await Writer.findByCredentials(email, password);
@@ -35,8 +34,8 @@ router.post('/login', async (req, res) => {
             secure: process.env.NODE_ENV !== 'production' ? false : true
         });
         res.json(writer);
-    } catch (e) {
-        res.status(400).json({ error: e.toString() });
+    } catch (error) {
+        res.status(400).json({ error: error.toString() });
     }
 });
 
