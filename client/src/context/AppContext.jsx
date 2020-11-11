@@ -4,26 +4,41 @@ import axios from 'axios';
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-  const [Writer, setWriter] = useState(null);
+  const [currentWriter, setCurrentWriter] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [search, setSearch] = useState('');
+  const [currentFilter, setCurrentFilter] = useState(null);
   const [loading, setLoading] = useState(false);
-    const writer = sessionStorage.getItem('writer');
+  const [postData, setPostData] = useState({});
+  const writer = sessionStorage.getItem('writer');
 
   useEffect(() => {
-    if (writer && !Writer) {
+    if (writer && !currentWriter) {
       axios
         .get('/writers/me', { withCredentials: true })
-        .then((res) => setWriter(res.data))
+        .then((data) => setCurrentWriter(data))
         .catch((error) => console.log(error));
     }
-  }, [Writer, writer]);
+  }, [currentWriter, writer]);
 
   return (
     <AppContext.Provider
       value={{
-        Writer,
-        setWriter,
+        currentWriter,
+        setCurrentWriter,
         loading,
         setLoading,
+        blogs,
+        setBlogs,
+        filteredBlogs,
+        setFilteredBlogs,
+        search,
+        setSearch,
+        currentFilter,
+        setCurrentFilter,
+        postData,
+        setPostData,
       }}
     >
       {children}

@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = sessionStorage.getItem('writer');
+  const writer = sessionStorage.getItem('writer');
   return (
     <Route
       {...rest}
       render={(routeProps) =>
-        !user ? <Redirect to="/login" /> : <Component {...routeProps} />
+        !writer ? <Redirect to="/" /> : <Component {...routeProps} />
       }
     />
   );

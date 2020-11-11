@@ -1,42 +1,43 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import WritersBlog from './components/WritersBlog';
-import PostList from './components/PostList';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {Container} from 'react-bootstrap'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
-import AppNavbar from './components/AppNavbar';
+import Register from './pages/Register';
+// import AppNavbar from './components/AppNavbar';
 import Footer from './components/footer';
 import Logout from './components/Logout';
 import DeletedBlog from './components/DeletedBlog'
 import Readers from './components/Readers';
-import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
 import { AppContextProvider } from './context/AppContext';
 import Blog from './components/Blog';
+import WritersHomePg from './pages/WritersHomePg';
+import BlogForm from './components/BlogForm';
+import BlogList from './components/BlogList';
 
-const App = () => {
+function App() {
   return (
     <div className="App">
-      <AppNavbar />
+      {/* <AppNavbar /> */}
       <AppContextProvider>
-        <BrowserRouter>
-          <Container>
+        <Container>
+          <Router>
             <Switch>
               <HomePage />
-              <Route exact path="/" components={HomePage} />
-              <Route exact path="/writers/new" component={Register} />
-              <Route exact path="/posts" component={PostList} />
-              <Route exact path="/posts/new" component={WritersBlog} />
-              <Route exact path="/posts/delete/:id" component={DeletedBlog} />
-              <PrivateRoute exact path="/writers/login" component={Login} />
+              <Route exact path="/" component={HomePage} />
+              <PrivateRoute exact path="/writers" components={WritersHomePg} />
+              <Route exact path="/writers/login" component={Login} />
+              <Route exact path="/writers/register" component={Register} />
+              <PrivateRoute exact path="/writers/logout" component={Logout} />
+              <PrivateRoute exact path="/posts/:id" component={Blog} />
+              <PrivateRoute exact path="/posts/new" component={BlogForm} />
+              <PrivateRoute exact path="/posts/delete/:id" component={DeletedBlog} />
+              <PrivateRoute exact path="/posts" component={BlogList} />
               <Route exact path="/readers/comments" component={Readers} />
-              <Route exact path="/readers" component={PostList} />
-              <Route exact path="/writers/logout" component={Logout} />
-              <Route exact path="/posts" component={Blog} />
             </Switch>
-          </Container>
-        </BrowserRouter>
+          </Router>
+        </Container>
         <Footer />
       </AppContextProvider>
     </div>

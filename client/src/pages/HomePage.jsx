@@ -1,24 +1,30 @@
 import React from 'react';
-import { Jumbotron } from 'react-bootstrap';
-import PostList from '../components/PostList';
+import { Jumbotron, Button } from 'react-bootstrap';
+import BlogList from '../components/BlogList';
+import AppNavbar from '../components/AppNavbar';
 
-
-const HomePage = () => {
+const HomePage = ({history}) => {
     return (
       <div>
+        <AppNavbar history={history} />
         <Jumbotron>
           <div className="">
-            <h1>Jeannie's Simple Blog!</h1>
+            <h1> JEANNIE'S BLOG!!!</h1>
             <h4>
-              WELCOME!!!
               <br />
               Feel free to leave your comments, thoughts, desires...
               <br />
-              Well you get the point..
+              Well, you get the point.
             </h4>
           </div>
         </Jumbotron>
-        <PostList />
+        <BlogList />
+        <Button className="mt-2 mr-2" onClick={() => history.push('/posts/new')}>
+          Create Post
+        </Button>
+        <Button className="mt-2 ml-2" onClick={() => history.push('/posts')}>
+          View Posts
+        </Button>
       </div>
     );
 }

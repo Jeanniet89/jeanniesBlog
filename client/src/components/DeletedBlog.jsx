@@ -11,7 +11,7 @@ const DeletedBlog = ({ id }) => {
         setLoading(true);
         const Delete = await swal({
           title: 'Are you sure?',
-          text: 'Once deleted, you will not be able to recover this task',
+          text: 'Once deleted, you will not be able to recover this post',
           icon: 'warning',
           buttons: true,
           dangerMode: true,
@@ -35,4 +35,4 @@ const DeletedBlog = ({ id }) => {
     };
 };
 
-export default DeletedBlog 
+export default DeletedBlog;

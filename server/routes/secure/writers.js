@@ -1,71 +1,44 @@
 const router = require('express').Router(),
-    isAdmin = require('../../middleware/authorization/index'),
-    passport = require('../../middleware/authentication/index'),
-    jwt = require('jsonwebtoken');
+    isAdmin = require('../../middleware/authorization/index');
 
-router.post(
-    '/writers/new',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => res.json(req.user)
-);
 
-router.get('/admin', isAdmin(),
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
-        try {
-            res.json({ message: 'admin user' });
-        } catch (error) {
-            res.status(401).json({ error: error.toString() });
-        }
+router.get('/writers', isAdmin(), async (res) => {
+    try {
+        res.json({ message: "admin user" });
+    } catch (error) {
+        res.status(404).json({ error: error.toString() });
     }
-);
+});
 
-router.patch(
-    '/me',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
-        const updates = Object.keys(req.body);
-        const allowedUpdates = [
-            'name',
-            'email',
-            'password'
-        ];
-        const isValidOperation = updates.every((update) =>
-            allowedUpdates.includes(update)
-        );
-        if (!isValidOperation)
-            return res.status(400).send({ error: 'invalid update!' });
-        if (updates.includes('phoneNumber')) welcomeText(req.body.phoneNumber);
-        try {
-            updates.forEach((update) => (req.user[update] = req.body[update]));
-            await req.user.save();
-            res.json(req.user);
-        } catch (error) {
-            res.status(400).json({ error: error.toString() });
-        }
+// Get current writer
+router.get('/writers', async (req, res) => {
+    try {
+        res.json(req.writer);
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
     }
-);
+});
 
-router.post(
-    '/logout',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
+// Updating a writer
+router.patch('/writers/me', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['name', 'email', 'password'];
+    const isValidOperation = updates.every((update) => 
+        allowedUpdates.includes(update),  
+    );
+    if (!isValidOperation) 
+        return res.status(400).send({ error: 'invalid update!' });
+    try {
+        updates.forEach((update) => (req.writer[update] = req.body[update]));
+        await req.writer.save();
+        res.json(req.writer);
+    } catch (error) {
+        res.status(400).json({ error: error.toString() });
+    }
+});
+
+// Logging out a writer
+router.post('/writers/logout', async (req, res) => {
         try {
             req.user.tokens = req.user.tokens.filter((token) => {
                 return token.token !== req.token;
@@ -76,59 +49,26 @@ router.post(
         } catch (error) {
             res.status(500).json({ error: error.toString() });
         }
-    }
-);
-
-router.post(
-    '/logoutAll',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
+});
+    
+// Loggin out all devices
+router.post('/writers/logoutAll',async (req, res) => {
         try {
-            req.user.tokens = [];
-            await req.user.save();
+            req.writer.tokens = [];
+            await req.writer.save();
             res.clearCookie('jwt');
-            res.json({ message: 'all devices logged out' });
+            res.json({ message: 'All devices logged out' });
         } catch (error) {
             res.status(500).json({ error: error.toString() });
         }
-    }
-);
+    });
 
-router.put(
-    '/password',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
+// Deleting a writer
+router.delete('/writers/delete/:id', async (req, res) => {
         try {
-            req.user.password = req.body.password;
-            await req.user.save();
+            await req.writer.remove();
             res.clearCookie('jwt');
-            res.json({ message: 'password updated successfully' });
-        } catch (error) {
-            res.json({ error: error.toString() });
-        }
-    }
-);
-
-router.delete(
-    '/:id',
-    router.use(
-        passport.authenticate('jwt', {
-            session: false
-        })
-    ),
-    async (req, res) => {
-        try {
-            await req.user.remove();
-            res.clearCookie('jwt');
-            res.json({ message: 'user deleted' });
+            res.json({ message: 'Account deleted' });
         } catch (error) {
             res.status(500).json({ error: error.toString() });
         }

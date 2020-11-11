@@ -5,7 +5,7 @@ const app = require('./server/app'),
  PORT = process.env.PORT || 8080;
 
 // Setting Routes
-const postRoutes = require("./server/routes/posts");
+const postRoutes = require("./server/routes/secure/posts");
 app.use('/posts', postRoutes);
 const readerRoutes = require("./server/routes/readers");
 app.use('/readers', readerRoutes);

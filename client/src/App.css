@@ -11,14 +11,16 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	color: white;
+  color: Black;
+  font-weight: bolder;
+  font-style: oblique;
 }
 
 .jumbotron {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	background: url('https://res.cloudinary.com/jeanniet89/image/upload/c_limit,h_307,q_auto,r_0/v1600325333/dreamofjeannie_o3tks0.jpg');
+	justify-content: flex-start;
+	background: url('https://res.cloudinary.com/jeanniet89/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1601016406/dreamofjeannie_hfzbsk.jpg');
 	background-size: cover;
 	height: 550px;
 	text-align: center;

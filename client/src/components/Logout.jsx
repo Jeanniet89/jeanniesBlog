@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Logout = () => {
-  const history = useHistory();
-  const { setCurrentUser } = AppContext;
+  const { setCurrentWriter } = useContext(AppContext);
+   const history = useHistory();
 
-  const handleSignOut = () => {
-    axios
-      .post('/writers/logout', { withCredentials: true })
-      .then(() => {
-        setCurrentUser(null);
-        sessionStorage.removeItem('writer');
-        history.push('/home');
-      })
-      .catch((error) => console.log(error));
+  const handleSignOut = async () => {
+    try {
+      await axios({
+        method: 'POST',
+        url: '/writers/logout',
+        withCredentials: true
+      });
+      sessionStorage.removeItem('writer');
+      setCurrentWriter(null);
+      history.push('/login')
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return <Dropdown.Item onClick={handleSignOut}>Logout</Dropdown.Item>;

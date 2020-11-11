@@ -1,9 +1,8 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const isAdmin = () => {
     return (req, res, next) => {
-        if (!req.user.admin)
+        if (!req.writer.admin)
             return res.status(401).json({ error: 'access denied' });
         next();
     };

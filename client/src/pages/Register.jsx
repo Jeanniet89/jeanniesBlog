@@ -4,55 +4,53 @@ import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { AppContext } from '../context/AppContext';
 
+
 const Register = ({history}) => {
-  const [ formData, setFormData ] = useState('');
-  const { setWriter } = useContext(AppContext);
+    const { setCurrentWriter } = useContext(AppContext);
+  const [formData, setFormData] = useState(null);
   
-  const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios
-      .post('/writers/new', formData)
-      .then((response) => {
-        sessionStorage.setItem('writer', response.data);
-        setWriter(response.data);
-        history.push('/home');
-      })
-     .catch((error) => console.log(error));
-  };
+const handleRegister = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('/writers/register', formData);
+    sessionStorage.setItem('writers', response.data);
+    setCurrentWriter(response.data.writer);
+    history.push('/writers');
+  } catch (error) {
+    console.log('Register Error: ', error);
+  }
+};
 
   return (
     <>
-      <Container className="signupcontainer container d-flex flex-column align-items-center justify-content-center fullscreen">
-        <h2 className="title mb-2 text-left">Welcome!</h2>
-        <Form style={{ width: 300 }} onSubmit={handleSubmit}>
-          <Form.Group>
+      <Container className="container d-flex flex-column align-items-center justify-content-center fullscreen">
+        <h2 className="mb-4">Welcome!</h2>
+        <Form style={{ width: 300 }} onSubmit={handleRegister}>
+          <Form.Group controlId="fullName">
             <Form.Label htmlFor="fullName">Full Name</Form.Label>
             <Form.Control
-              id="fullName"
               type="text"
               placeholder="Full Name"
               name="name"
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="email">
             <Form.Label htmlFor="email">Email Address</Form.Label>
             <Form.Control
-              id="email"
               type="email"
               placeholder="Email Address"
               name="email"
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="password">
             <Form.Label htmlFor="password">Password</Form.Label>
             <Form.Control
-              id="password"
               type="password"
               placeholder="Password"
               name="password"
@@ -65,7 +63,7 @@ const Register = ({history}) => {
             </Button>
           </Form.Group>
         </Form>
-        <Link className="mt-2" to="/login">
+        <Link className="mt-2" to="/writers/login">
           Already a member? Login.
         </Link>
       </Container>
