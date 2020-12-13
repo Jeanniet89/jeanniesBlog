@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import {Container} from 'react-bootstrap'
+import { Container } from 'react-bootstrap';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 // import AppNavbar from './components/AppNavbar';
 import Footer from './components/footer';
 import Logout from './components/Logout';
-import DeletedBlog from './components/DeletedBlog'
+import DeletedBlog from './components/DeletedBlog';
 import Readers from './components/Readers';
 import PrivateRoute from './components/PrivateRoute';
 import { AppContextProvider } from './context/AppContext';
@@ -24,7 +24,6 @@ function App() {
         <Container>
           <Router>
             <Switch>
-              <HomePage />
               <Route exact path="/" component={HomePage} />
               <PrivateRoute exact path="/writers" components={WritersHomePg} />
               <Route exact path="/writers/login" component={Login} />
@@ -32,7 +31,11 @@ function App() {
               <PrivateRoute exact path="/writers/logout" component={Logout} />
               <PrivateRoute exact path="/posts/:id" component={Blog} />
               <PrivateRoute exact path="/posts/new" component={BlogForm} />
-              <PrivateRoute exact path="/posts/delete/:id" component={DeletedBlog} />
+              <PrivateRoute
+                exact
+                path="/posts/delete/:id"
+                component={DeletedBlog}
+              />
               <PrivateRoute exact path="/posts" component={BlogList} />
               <Route exact path="/readers/comments" component={Readers} />
             </Switch>
@@ -42,7 +45,6 @@ function App() {
       </AppContextProvider>
     </div>
   );
-};
+}
 
 export default App;
-

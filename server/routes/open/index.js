@@ -30,17 +30,20 @@ router.post('/writers/register', async (req, res) => {
 router.post('/writers/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        const writer = await Writer.findByCredentials({
+        const writer = await Writer.findByCredentials(
             email,
             password
-        });
+        );
+        console.log(1);
         const token = await writer.generateAuthToken();
+        console.log(2);
         res.cookie('jwt', token, {
             httpOnly: true,
             sameSite: 'Strict',
             secure: process.env.NODE_ENV !== 'production' ? false : true
         });
         res.json(writer);
+        console.log(3);
     } catch (error) {
         res.status(400).json({ error: error.toString() });
     }
